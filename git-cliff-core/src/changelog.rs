@@ -249,7 +249,17 @@ impl<'a> Changelog<'a> {
 				}
 				ProcessingStep::SplitCommits => {
 					debug!("Splitting commits...");
-					*commits = Self::apply_split_commits(commits);
+					if git_config.split_commits {
+						// If split commits is enabled, we apply the split
+						// commits function to the commits.
+						// This will create a new vector of commits with each
+						// line as a separate commit.
+						*commits = Self::apply_split_commits(commits);
+					} else {
+						// If split commits is not enabled, we just apply the
+						// commit parsers.
+						debug!("Split commits is disabled, skipping...");
+					}
 				}
 			}
 		}
