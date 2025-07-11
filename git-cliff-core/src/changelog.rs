@@ -119,18 +119,18 @@ impl<'a> Changelog<'a> {
 	/// Splits the commits by their message lines.
 	/// Returns a new vector of commits with each line as a separate commit.
 	fn apply_split_commits(commits: &mut Vec<Commit<'a>>) -> Vec<Commit<'a>> {
-		let mut splitted_commits = Vec::new();
+		let mut split_commits = Vec::new();
 		for commit in commits {
 			commit.message.lines().for_each(|line| {
 				let mut c = commit.clone();
 				c.message = line.to_string();
 				c.links.clear();
 				if !c.message.is_empty() {
-					splitted_commits.push(c)
+					split_commits.push(c)
 				};
 			})
 		}
-		splitted_commits
+		split_commits
 	}
 
 	/// Applies the commit parsers to the commits and returns the parsed
